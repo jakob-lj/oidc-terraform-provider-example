@@ -1,8 +1,5 @@
 name: ci
 on:
-  push:
-    branches:
-      - "**"
   workflow_dispatch:
     inputs:
       deploy-to-dev:
