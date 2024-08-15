@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "github_actions_assume_role_policy" {
       variable = "token.actions.githubusercontent.com:sub"
       # We will provide you the repository name here
       # <owner>/<repository-name>
-      values = ["repo:jakob-lj/oidc-terraform-provider:ref:refs/heads/main"]
+      values = ["repo:jakob-lj/oidc-terraform-provider-example:ref:refs/heads/main"]
     }
 
     # Condition checking that correct audience is used
