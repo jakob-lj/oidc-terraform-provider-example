@@ -1,0 +1,32 @@
+name: ci
+on:
+  push:
+    branches:
+      - "**"
+  workflow_dispatch:
+    inputs:
+      deploy-to-dev:
+        description: "Whether to deploy to dev"
+        type: boolean
+        required: true
+        default: false
+
+env:
+  APPLICATION_NAME: "cn-cnops-terminals-info"
+
+# NOTE: Set concurrency for the current workflow to 1
+concurrency: ci-${{ github.ref }}-${{ github.workflow }}
+
+jobs:
+  deploy:
+    timeout-minutes: 60
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+
+      - uses: capralifecycle/actions-lib/configure-aws-credentials@e3bb96046b8b72962d3f08971adde45017d09346 # v1.5.1
+        id: aws
+        with:
+          aws-account-id: "859141738257"
+          aws-iam-role-name: "gha-role" # comment ${{ github.ref == format('refs/heads/{0}', github.event.repository.default_branch) && steps.config.outputs.roleName || steps.config.outputs.limitedRoleName }} comment
+          authenticate-to-ecr: true
